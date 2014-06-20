@@ -40,7 +40,6 @@ class Queue
   def shift
     this_node = @nodes[ @first ]
     @nodes.delete(@first)
-
     @first = @nodes[ this_node.pointer ].value
     this_node
   end

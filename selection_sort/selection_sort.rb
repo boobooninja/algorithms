@@ -1,18 +1,12 @@
 module Sort
   def self.selection_sort(array)
-    length = array.length
-
-    array.each_with_index do |num,i|
-      pointer = 1
-
-      while pointer < length do
-        if num > array[pointer]
-          array[i], array[pointer] = array[pointer], array[i]
-        end
-        pointer += 1
+    for i in 0..array.length - 2
+      min = i
+      for j in i+1..array.length - 1
+        min = j if array[j] < array[min]
       end
+      array[i], array[min] = array[min], array[i]
     end
-
     array
   end
 end

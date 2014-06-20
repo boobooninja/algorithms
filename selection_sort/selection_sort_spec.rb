@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'rspec'
-require_relative '../sort.rb'
+require_relative 'selection_sort'
 
 describe 'Sort' do
   describe '.selection_sort' do

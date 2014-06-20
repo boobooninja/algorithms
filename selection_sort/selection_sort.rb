@@ -1,5 +1,4 @@
 module Sort
-
   def self.selection_sort(array)
     length = array.length
 

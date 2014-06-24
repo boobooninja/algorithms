@@ -34,6 +34,12 @@ class ComplexPredictor < Predictor
         @data[category][:books] += 1
       end
     end
+
+    # max_word = nil
+    # max_count = 0
+    # @data.each do |category, category_hash|
+
+    # end
   end
 
   # Public: Predicts category.
@@ -42,33 +48,12 @@ class ComplexPredictor < Predictor
   #
   # Returns a category.
   def predict(tokens)
-    # Always predict astronomy, for now.
-    # :astronomy
-
-    # minimum_category = nil
-    # minimum_distance = 999999999999
 
     this_books_categories = {}
-
-    # {
-    #   philosophy: 1000
-    #   religion: 500
-    #   science: 3000
-    # }
 
     @data.each do |category, category_hash|
       this_books_categories[category] = 0.0
     end
-
-    # {
-    #   philosophy: {
-    #     words: {'angst' => 4, 'christianity' => 7},
-    #     word_count: 1000,
-    #     books: 10,
-    #   }
-    # }
-
-    # tokens_set = Set.new(tokens)
 
     tokens.each do |token|
       if good_token?(token)
@@ -91,24 +76,40 @@ class ComplexPredictor < Predictor
 
     highest = nil
     highest_count = 0
+    good_token_count = 0
     this_books_categories.each do |category, count|
-puts "#{category} : #{count}"
-      highest = category if count > highest_count
-      highest_count = count
+puts "#{category} : #{count} : #{count / @data[category][:books]}"
+      if count > highest_count
+        highest = category
+        highest_count = count
+      end
+      good_token_count += count
     end
-
+puts "highest: #{highest}"
     highest
 
-    #   average_words_per_book = counts[:words].to_f / counts[:books]
-    #   difference = (tokens.count - average_words_per_book).abs
 
-    #   if difference < minimum_distance
-    #     minimum_category = category
-    #     minimum_distance = difference
-    #   end
-    # end
+    minimum_category = nil
+    minimum_distance = 999999999999
 
-    # minimum_category
+    @data.each do |category, counts|
+      average_words_per_book = counts[:word_count] / counts[:books]
+      difference = (good_token_count - average_words_per_book).abs
+
+      if difference < minimum_distance
+        minimum_category = category
+        minimum_distance = difference
+      end
+    end
+
+    minimum_category
+puts "minimum_category : #{minimum_category}"
+
+    if this_books_categories[highest] < this_books_categories[minimum_category]
+      highest
+    else
+      minimum_category
+    end
 
   end
 end

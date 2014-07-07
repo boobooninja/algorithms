@@ -36,23 +36,29 @@ class Node
     array
   end
 
-  def display(string, level=0)
-    return '' if @value.nil?
-    header = ''
+  def display(string, level=1)
+    header = ""
     level.times {header += '-'}
 
-    string += "#{header.chop} #{@value}\n"
-    if @right
-      string += "#{header} #{@right.display('', level + 1)}\n"
+    if self.value
+      string += "#{header.chop}#{self.to_s}\n"
     else
-      string += "#{header} nil\n"
+      string += "#{header.chop}nil\n"
     end
-    if @left
-      string += "#{header} #{@left.display('', level + 1)}\n"
-    else
-      string += "#{header} nil\n"
+
+    if self.right
+      string += self.right.display("", level + 1)
+    end
+
+    if self.left
+      string += self.left.display("", level + 1)
     end
 
     string
+  end
+
+  def to_s
+    # "Value: #{value}\n-- Right: #{right}\n-- Left: #{left}\n"
+    "Value: #{value}"
   end
 end

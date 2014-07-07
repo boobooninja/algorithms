@@ -70,15 +70,22 @@ describe 'Tree' do
     tree.add_node(4)
     tree.add_node(5)
     tree.add_node(6)
+    tree.add_node(7)
 
     expect(tree.head.left).to eq(nil)
     expect(tree.head.right.value).to eq(2)
+    expect(tree.head.right.right.value).to eq(3)
 
     tree.rebalance
 
-    expect(tree.head.left.value).to eq(2)
-    expect(tree.head.right.value).to eq(4)
-    expect(tree.head.left.left.value).to eq(1)
-    expect(tree.head.right.right.value).to eq(5)
+    expect(tree.head.value).to eq(4)
+    expect(tree.head.left).to be_a(Node)
+    expect(tree.head.right).to be_a(Node)
+
+    expect(tree.head.left.left).to be_a(Node)
+    expect(tree.head.right.right).to be_a(Node)
+
+    expect(tree.head.left.right).to be_a(Node)
+    expect(tree.head.right.left).to be_a(Node)
   end
 end

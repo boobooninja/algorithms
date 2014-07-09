@@ -42,6 +42,35 @@ describe 'Tree' do
     end
   end
 
+  context "responds to add_node_iterative(value)" do
+    it "when it's value is nil by setting it's value" do
+      tree = Tree.new
+      expect(tree.add_node_iterative(1)).to eq(1)
+      expect(tree.head.value).to eq(1)
+    end
+
+    it "when it's value is greater than the value to add a right node" do
+      tree = Tree.new
+      expect(tree.add_node_iterative(5)).to eq(5)
+      expect(tree.head.value).to eq(5)
+      expect(tree.add_node_iterative(3)).not_to eq(5)
+      expect(tree.head.left).to be_a(Node)
+      expect(tree.head.left.value).to eq(3)
+      expect(tree.head.right).to eq(nil)
+    end
+
+    it "when it's value is lesser than the value to add a left node" do
+      tree = Tree.new
+      expect(tree.add_node_iterative(5)).to eq(5)
+      expect(tree.head.value).to eq(5)
+      expect(tree.add_node_iterative(7)).not_to eq(5)
+      expect(tree.head.left).to eq(nil)
+      expect(tree.head.right).to be_a(Node)
+      expect(tree.head.right.value).to eq(7)
+    end
+  end
+
+
   context "responds to search(value)" do
     it "returns the value when it is found" do
       tree = Tree.new
@@ -59,6 +88,26 @@ describe 'Tree' do
       tree.add_node(3)
 
       expect(tree.search(4)).to eq(false)
+    end
+  end
+
+  context "responds to search_iterative(value)" do
+    it "returns the value when it is found" do
+      tree = Tree.new
+      tree.add_node(5)
+      tree.add_node(10)
+      tree.add_node(3)
+
+      expect(tree.search_iterative(3)).to eq(3)
+    end
+
+    it "returns false when it is not found" do
+      tree = Tree.new
+      tree.add_node(5)
+      tree.add_node(10)
+      tree.add_node(3)
+
+      expect(tree.search_iterative(4)).to eq(false)
     end
   end
 

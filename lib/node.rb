@@ -19,6 +19,32 @@ class Node
     end
   end
 
+  def add_child_iterative(new_value)
+    if @value.nil?
+      @value = new_value
+    else
+      if new_value < @value
+        this_child = @left
+        direction  = :left
+      elsif new_value > @value
+        this_child = @right
+        direction  = :right
+      end
+
+      if this_child.nil?
+        self.send("#{direction}=", Node.new(new_value))
+      else
+        begin
+          if this_child.value.nil?
+            this_child.value = new_value
+          else
+            this_child = this_child.send(direction)
+          end
+        end while this_child.value.nil?
+      end
+    end
+  end
+
   def search(this_value)
     return false if @value.nil?
     return self.value if @value == this_value
@@ -27,6 +53,24 @@ class Node
     elsif this_value > @value
       @right.nil? ? false : @right.search(this_value)
     end
+  end
+
+  def search_iterative(this_value)
+    this_node = self
+    begin
+      return false if this_node.value.nil?
+      return this_node.value if this_node.value == this_value
+
+      if this_value < this_node.value
+        this_node = this_node.left
+
+        return false if this_node.nil?
+      elsif this_value > this_node.value
+        this_node = this_node.right
+
+        return false if this_node.nil?
+      end
+    end while this_node
   end
 
   def rebalance(array)

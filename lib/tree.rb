@@ -9,8 +9,16 @@ class Tree
     @head.add_child(value)
   end
 
+  def add_node_iterative(value)
+    @head.add_child_iterative(value)
+  end
+
   def search(value)
     @head.search(value)
+  end
+
+  def search_iterative(value)
+    @head.search_iterative(value)
   end
 
   def rebalance
@@ -20,19 +28,7 @@ class Tree
 
     @head = Node.new
 
-    # mid = array.length / 2
-    # first = array[0...mid]
-    # second = array[mid+1..-1]
-    # longest = first.length > second.length ? first.length : second.length
-
-    # self.add_node(mid)
-
     split_array(array)
-
-    # longest.times do |num|
-    #   add_node(first[num]) if first[num]
-    #   add_node(second[num]) if second[num]
-    # end
 
     self
   end
